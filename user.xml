@@ -1,0 +1,69 @@
+<templateSet group="user">
+  <template name="create adapter" value="import androidx.appcompat.app.AppCompatActivity&#10;import android.os.Bundle&#10;import android.view.LayoutInflater&#10;import android.view.View&#10;import android.view.ViewGroup&#10;import androidx.recyclerview.widget.LinearLayoutManager&#10;import androidx.recyclerview.widget.RecyclerView&#10;import kotlinx.android.synthetic.main.activity_main.*&#10;import kotlinx.android.synthetic.main.cell.view.*&#10;&#10;class MainActivity : AppCompatActivity() {&#10;&#9;val $list$ = MutableList(100){it}&#10;    override fun onCreate(savedInstanceState: Bundle?) {&#10;        super.onCreate(savedInstanceState)&#10;        setContentView(R.layout.activity_main)&#10;        setupRecyclerView()&#10;    }&#10;    fun setupRecyclerView() {&#10;        $recyclerView$.layoutManager = LinearLayoutManager(this)&#10;        $recyclerView$.adapter = $Adapter$($list$)&#10;    }&#10;}&#10;&#10;&#10;class $Adapter$(val $list$: MutableList&lt;Int&gt;) : RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;(){&#10;&#9;override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {&#10;&#9;&#9;val itemView = LayoutInflater.from(parent.context).inflate(R.layout.$cell$, parent, false)&#10;&#9;&#9;return $ViewHolder$(itemView)&#10;&#9;}&#10;&#10;&#9;override fun getItemCount(): Int = $list$.size&#10;&#10;&#9;override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {&#10;&#9;    if (viewHolder is $ViewHolder$){&#10;&#9;&#9;&#9;viewHolder.itemView.textView.text = $list$[position].toString()&#10;&#9;&#9;}&#10;&#9;}&#10;}&#10;&#10;class $ViewHolder$(itemView: View) : RecyclerView.ViewHolder(itemView)&#10;&#10;" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="recyclerView" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="Adapter" expression="kotlinClassName()" defaultValue="Adapter" alwaysStopAt="true" />
+    <variable name="ViewHolder" expression="kotlinClassName()" defaultValue="ViewHolder" alwaysStopAt="true" />
+    <variable name="list" expression="kotlinVariable()" defaultValue="list" alwaysStopAt="true" />
+    <variable name="cell" expression="kotlinVariable()" defaultValue="cell" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="create recyclerView xml" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#10;&lt;androidx.constraintlayout.widget.ConstraintLayout&#10;        xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&#10;        xmlns:tools=&quot;http://schemas.android.com/tools&quot;&#10;        xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&#10;        android:layout_width=&quot;match_parent&quot;&#10;        android:layout_height=&quot;match_parent&quot;&#10;        tools:context=&quot;.MainActivity&quot;&gt;&#10;    &lt;androidx.recyclerview.widget.RecyclerView&#10;            android:layout_width=&quot;match_parent&quot;&#10;            android:layout_height=&quot;match_parent&quot; android:id=&quot;@+id/recyclerView&quot;/&gt;&#10;&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="create cell xml" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#10;&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&#10;              android:orientation=&quot;vertical&quot;&#10;              android:layout_width=&quot;match_parent&quot;&#10;              android:layout_height=&quot;wrap_content&quot;&gt;&#10;&#10;    &lt;TextView&#10;            android:text=&quot;TextView&quot;&#10;            android:layout_width=&quot;match_parent&quot;&#10;            android:layout_height=&quot;wrap_content&quot; android:id=&quot;@+id/textView&quot; android:layout_margin=&quot;10dp&quot;&#10;            android:textSize=&quot;24sp&quot;/&gt;&#10;&lt;/LinearLayout&gt;" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="create menu" value="override fun onCreateOptionsMenu(menu: Menu?): Boolean {&#10;    menuInflater.inflate(R.menu.$menu$, menu)&#10;    return true&#10;}&#10;&#10;override fun onOptionsItemSelected(item: MenuItem?): Boolean {&#10;        return true&#10;}&#10;" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="menu" expression="completeSmart()" defaultValue="menu" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="put back data" value="    override fun onCreate(savedInstanceState: Bundle?) {&#10;        super.onCreate(savedInstanceState)&#10;        setContentView(R.layout.activity_details)&#10;        val number = intent.getIntExtra(&quot;ShowDetails&quot;, Int.MIN_VALUE)&#10;        if (number != Int.MIN_VALUE) {&#10;            editText.setText(&quot;$number&quot;)&#10;        }&#10;    }&#10;&#10;    fun onClickFinish(view:View) {&#10;        intent.putExtra(&quot;putbackResult&quot;, editText.text.toString())&#10;        setResult(113, intent)&#10;        finish()&#10;    }" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="receive data put back" value="override fun startDetailActivity(position: Int?) {&#10;        selectedPosition = position&#10;        val intent = Intent(this, DetailsActivity::class.java).apply {&#10;            if (position != null) {&#10;                putExtra(&quot;ShowDetails&quot;, list[position])&#10;            }&#10;        }&#10;        startActivityForResult(intent,113)&#10;    }&#10;&#10;    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {&#10;        super.onActivityResult(requestCode, resultCode, data)&#10;        if (requestCode == 113 &amp;&amp; resultCode == 113) {&#10;            val resultString = data?.getStringExtra(&quot;putbackResult&quot;)&#10;            val number = (resultString ?: &quot;&quot;).toInt()&#10;            if (selectedPosition != null) {&#10;                list[selectedPosition!!] = number&#10;                recyclerView.adapter?.notifyItemChanged(selectedPosition!!)&#10;            } else {&#10;                list.add(list.size, number)&#10;                recyclerView.scrollToPosition(list.size - 1)&#10;                recyclerView.adapter?.notifyItemInserted(list.size - 1)&#10;            }&#10;        }&#10;    }" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="ival" value="internal val $variable$: $Type$ = $value$   " toReformat="false" toShortenFQNames="true">
+    <variable name="variable" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="Type" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="ivar" value="internal var $variable$: $Type$ = $value$   " toReformat="false" toShortenFQNames="true">
+    <variable name="variable" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="Type" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="pf" value="private fun $functionName$() : $returnValue$ {&#10;    &#10;}" toReformat="false" toShortenFQNames="true">
+    <variable name="functionName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="returnValue" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="observable" value=" private var $variable$ : $Type$ by Delegates.observable($initValue$) {&#10;    property, oldValue, newValue -&gt;&#10; }" toReformat="false" toShortenFQNames="true">
+    <variable name="variable" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="Type" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="initValue" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+</templateSet>
