@@ -19,23 +19,23 @@
       <option name="XML" value="true" />
     </context>
   </template>
-  <template name="create menu" value="override fun onCreateOptionsMenu(menu: Menu?): Boolean {&#10;    menuInflater.inflate(R.menu.$menu$, menu)&#10;    return true&#10;}&#10;&#10;override fun onOptionsItemSelected(item: MenuItem?): Boolean {&#10;        return true&#10;}&#10;" description="" toReformat="false" toShortenFQNames="true">
+  <template name="create menu" value="import android.view.Menu&#10;import android.view.MenuItem&#10;&#10;override fun onCreateOptionsMenu(menu: Menu?): Boolean {&#10;    menuInflater.inflate(R.menu.$menu$, menu)&#10;    return true&#10;}&#10;&#10;override fun onOptionsItemSelected(item: MenuItem?): Boolean {&#10;        return true&#10;}&#10;" description="" toReformat="false" toShortenFQNames="true">
     <variable name="menu" expression="completeSmart()" defaultValue="menu" alwaysStopAt="true" />
     <context>
       <option name="KOTLIN" value="true" />
     </context>
   </template>
-  <template name="put back data" value="    override fun onCreate(savedInstanceState: Bundle?) {&#10;        super.onCreate(savedInstanceState)&#10;        setContentView(R.layout.activity_details)&#10;        val number = intent.getIntExtra(&quot;ShowDetails&quot;, Int.MIN_VALUE)&#10;        if (number != Int.MIN_VALUE) {&#10;            editText.setText(&quot;$number&quot;)&#10;        }&#10;    }&#10;&#10;    fun onClickFinish(view:View) {&#10;        intent.putExtra(&quot;putbackResult&quot;, editText.text.toString())&#10;        setResult(113, intent)&#10;        finish()&#10;    }" description="" toReformat="false" toShortenFQNames="true">
+  <template name="put back data" value="fun onClickFinish(view: View) {&#10;    myObject?.name = nameEditText.text.toString()&#10;    myObject?.phone = phoneEditText.text.toString()&#10;    intent.putExtra(&quot;putBack&quot;, myObject)&#10;    setResult(0, intent)&#10;    finish()&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="KOTLIN" value="true" />
     </context>
   </template>
-  <template name="receive data put back" value="override fun startDetailActivity(position: Int?) {&#10;        selectedPosition = position&#10;        val intent = Intent(this, DetailsActivity::class.java).apply {&#10;            if (position != null) {&#10;                putExtra(&quot;ShowDetails&quot;, list[position])&#10;            }&#10;        }&#10;        startActivityForResult(intent,113)&#10;    }&#10;&#10;    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {&#10;        super.onActivityResult(requestCode, resultCode, data)&#10;        if (requestCode == 113 &amp;&amp; resultCode == 113) {&#10;            val resultString = data?.getStringExtra(&quot;putbackResult&quot;)&#10;            val number = (resultString ?: &quot;&quot;).toInt()&#10;            if (selectedPosition != null) {&#10;                list[selectedPosition!!] = number&#10;                recyclerView.adapter?.notifyItemChanged(selectedPosition!!)&#10;            } else {&#10;                list.add(list.size, number)&#10;                recyclerView.scrollToPosition(list.size - 1)&#10;                recyclerView.adapter?.notifyItemInserted(list.size - 1)&#10;            }&#10;        }&#10;    }" description="" toReformat="false" toShortenFQNames="true">
+  <template name="receive data put back" value="override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {&#10;    super.onActivityResult(requestCode, resultCode, data)&#10;    if (data == null) return&#10;    if (requestCode == 0 &amp;&amp; resultCode == 0) {&#10;        val myObject = data.getParcelableExtra&lt;Person&gt;(&quot;putBack&quot;)&#10;        nameEditText.setText(myObject.name!!)&#10;        phoneEditText.setText(myObject.phone!!)&#10;    }&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="KOTLIN" value="true" />
     </context>
   </template>
-  <template name="ival" value="internal val $variable$: $Type$ = $value$   " toReformat="false" toShortenFQNames="true">
+  <template name="ival" value="internal val $variable$: $Type$ = $value$   " description="" toReformat="false" toShortenFQNames="true">
     <variable name="variable" expression="" defaultValue="" alwaysStopAt="true" />
     <variable name="Type" expression="" defaultValue="" alwaysStopAt="true" />
     <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
@@ -43,7 +43,7 @@
       <option name="KOTLIN" value="true" />
     </context>
   </template>
-  <template name="ivar" value="internal var $variable$: $Type$ = $value$   " toReformat="false" toShortenFQNames="true">
+  <template name="ivar" value="internal var $variable$: $Type$ = $value$   " description="" toReformat="false" toShortenFQNames="true">
     <variable name="variable" expression="" defaultValue="" alwaysStopAt="true" />
     <variable name="Type" expression="" defaultValue="" alwaysStopAt="true" />
     <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
@@ -51,17 +51,89 @@
       <option name="KOTLIN" value="true" />
     </context>
   </template>
-  <template name="pf" value="private fun $functionName$() : $returnValue$ {&#10;    &#10;}" toReformat="false" toShortenFQNames="true">
+  <template name="pf" value="private fun $functionName$() : $returnValue$ {&#10;    $END$&#10;}" description="" toReformat="false" toShortenFQNames="true">
     <variable name="functionName" expression="" defaultValue="" alwaysStopAt="true" />
     <variable name="returnValue" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
       <option name="KOTLIN" value="true" />
     </context>
   </template>
-  <template name="observable" value=" private var $variable$ : $Type$ by Delegates.observable($initValue$) {&#10;    property, oldValue, newValue -&gt;&#10; }" toReformat="false" toShortenFQNames="true">
+  <template name="observable" value=" private var $variable$ : $Type$ by Delegates.observable($initValue$) {&#10;    property, oldValue, newValue -&gt;&#10; }" description="" toReformat="false" toShortenFQNames="true">
     <variable name="variable" expression="" defaultValue="" alwaysStopAt="true" />
     <variable name="Type" expression="" defaultValue="" alwaysStopAt="true" />
     <variable name="initValue" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="pv" value="private var $variable$: $Type$ = $value$" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="variable" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="Type" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="pl" value="private val $variable$: $Type$ = $value$" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="variable" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="Type" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="bounce animation" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#10;&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&#10;    android:fillAfter=&quot;true&quot;&#10;    android:interpolator=&quot;@android:anim/bounce_interpolator&quot;&gt;&#10;    &lt;scale&#10;        android:duration=&quot;600&quot;&#10;        android:fromXScale=&quot;1.35&quot;&#10;        android:fromYScale=&quot;1.35&quot;&#10;        android:pivotX=&quot;50%&quot;&#10;        android:pivotY=&quot;50%&quot;&#10;        android:toXScale=&quot;1.0&quot;&#10;        android:toYScale=&quot;1.0&quot;/&gt;&#10;&lt;/set&gt;" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="XML" value="true" />
+    </context>
+  </template>
+  <template name="bounce animate" value="private fun animateButton(view: View) {&#10;    val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)&#10;    view.startAnimation(bounceAnimation)&#10;}" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="show popup" value=" private fun showPopup() {&#10;    val dialogTitle = getString(R.string.about_title, BuildConfig.VERSION_NAME)&#10;    val dialogMessage = getString(R.string.about_message)&#10;    val builder = AlertDialog.Builder(this)&#10;    builder.setTitle(dialogTitle)&#10;    builder.setMessage(dialogMessage)&#10;    builder.create().show()&#10; }" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="set Image Resource" value="val id = resources.getIdentifier(&quot;$imageName$&quot;, &quot;drawable&quot;, packageName)&#10;$imageView$.setImageResource(id)" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="imageName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="imageView" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="gradle parcelize" value="androidExtensions {&#10;    experimental = true&#10;}" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="GROOVY" value="true" />
+    </context>
+  </template>
+  <template name="data class Parcelable" value="import kotlinx.android.parcel.Parcelize&#10;import android.os.Parcelable&#10;@Parcelize&#10;data class $ClassName$(var $parameter$: $ParameterType$): Parcelable" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="ClassName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="parameter" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="ParameterType" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="exit app" value="    fun exit(view: View) {&#10;        val intent = Intent(Intent.ACTION_MAIN)&#10;        intent.addCategory(Intent.CATEGORY_HOME)&#10;        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK&#10;        startActivity(intent)&#10;//        finish()&#10;    }" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="show custom alert" value="fun showCustomAlert(view: View) {&#10;   var alertDialogBuilder = AlertDialog.Builder(this)&#10;   val dialogView = layoutInflater.inflate( R.layout.login_dialog, null)&#10;   var alertDialog = alertDialogBuilder.setView(dialogView).create()&#10;   alertDialog.show()&#10;}" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="checkConectivity" value="import android.content.Context&#10;import android.net.ConnectivityManager&#10;import android.widget.Toast&#10;private fun checkConnectivity() {&#10;        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager&#10;        val activityNetwork = connectivityManager.activeNetworkInfo&#10;        if (activityNetwork != null &amp;&amp; activityNetwork.isConnected) {&#10;            Toast.makeText(this, &quot;Network connected&quot;, Toast.LENGTH_SHORT).show()&#10;        } else {&#10;            Toast.makeText(this, &quot;Check network connection&quot;, Toast.LENGTH_SHORT).show()&#10;        }&#10;    }" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="pcv" value="private const val LOG_TAG = &quot;$ClassName$&quot;" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="ClassName" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
       <option name="KOTLIN" value="true" />
     </context>
