@@ -127,7 +127,7 @@
       <option name="KOTLIN" value="true" />
     </context>
   </template>
-  <template name="checkConectivity" value="import android.content.Context&#10;import android.net.ConnectivityManager&#10;import android.widget.Toast&#10;private fun checkConnectivity() {&#10;        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager&#10;        val activityNetwork = connectivityManager.activeNetworkInfo&#10;        if (activityNetwork != null &amp;&amp; activityNetwork.isConnected) {&#10;            Toast.makeText(this, &quot;Network connected&quot;, Toast.LENGTH_SHORT).show()&#10;        } else {&#10;            Toast.makeText(this, &quot;Check network connection&quot;, Toast.LENGTH_SHORT).show()&#10;        }&#10;    }" description="" toReformat="false" toShortenFQNames="true">
+  <template name="check Conectivity" value="import android.content.Context&#10;import android.net.ConnectivityManager&#10;import android.widget.Toast&#10;private fun checkConnectivity() {&#10;        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager&#10;        val activityNetwork = connectivityManager.activeNetworkInfo&#10;        if (activityNetwork != null &amp;&amp; activityNetwork.isConnected) {&#10;            Toast.makeText(this, &quot;Network connected&quot;, Toast.LENGTH_SHORT).show()&#10;        } else {&#10;            Toast.makeText(this, &quot;Check network connection&quot;, Toast.LENGTH_SHORT).show()&#10;        }&#10;    }" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="KOTLIN" value="true" />
     </context>
